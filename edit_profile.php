@@ -65,6 +65,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
+    <header>
+        <nav>
+            <a href="/index.php" class="reg">Регистрация</a>
+            <a href="/login.php" class="login">Вход</a>
+            <a href="/edit_profile.php" class="edit">Редактирование профиля</a>
+            <a href="/admin.php" class="adm">Админ</a>
+        </nav>
+    </header>
+
 <main>
     <h1 class="logotype">Редактирование</h1>
 
@@ -84,8 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="submit" class="btn" value="Сохранить">
     </form>
 </main>
-
-<a href="/login.php">Логин</a>
 
 </body>
 </html>
