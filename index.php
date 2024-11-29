@@ -66,8 +66,6 @@
         <nav>
             <a href="/index.php" class="reg">Регистрация</a>
             <a href="/login.php" class="login">Вход</a>
-            <a href="/edit_profile.php" class="edit">Редактирование профиля</a>
-            <a href="/admin.php" class="adm">Админ</a>
         </nav>
     </header>
 

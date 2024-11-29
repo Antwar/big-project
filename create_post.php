@@ -2,28 +2,19 @@
 require './functions/functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $user_id = $_SESSION['user_id'];
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password_hash = $_POST['password_hash'];
-    $new_password_hash = isset($_POST['new_password_hash']) ? $_POST['new_password_hash'] : '';
+    $title = htmlspecialchars($_POST['title']);
+    $content = htmlspecialchars($_POST['content']);
 
-    if (empty($password_hash)) {
-        echo 'Введите текущий пароль';
-    } else {
-        $upd = editProfile($user_id, $username, $email, $password_hash, $new_password_hash);
-
-        if ($upd) {
-            echo 'Изменения внесены';
-        } else {
-            echo 'Изменения не внесены';
-        }
-    }
+    $post = createPost($title, $content);
 }
+
 
 if (isset($_SESSION['session_token']) && $_SESSION['user_id']) {
     echo '<style> .reg, .login, .adm {visibility: hidden;} </style>';
+} else {
+    header('Location: login.php');
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +22,7 @@ if (isset($_SESSION['session_token']) && $_SESSION['user_id']) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit</title>
+    <title>Create post</title>
 
     <style>
         main {
@@ -71,7 +62,7 @@ if (isset($_SESSION['session_token']) && $_SESSION['user_id']) {
 
     <header>
         <nav>
-            
+
             <a href="/index.php" class="reg">Регистрация</a>
             <a href="/login.php" class="login">Вход</a>
             <a href="/edit_profile.php" class="edit">Редактирование профиля</a>
@@ -91,19 +82,14 @@ if (isset($_SESSION['session_token']) && $_SESSION['user_id']) {
     <h1 class="logotype">Создание поста</h1>
 
     <form action="" method="post" id="myform">
-        <label for="username">Имя:</label>
-        <input type="text" name="username" id="username" required>
+        <label for="title">Заголовок:</label>
+        <input type="text" name="title" id="title" required>
 
-        <label for="email">Эл. почта:</label>
-        <input type="email" name="email" id="email" required>
+        <label for="content">Содержание:</label>
+        <input type="text" name="content" id="content" required>
 
-        <label for="password_hash">Текущий пароль:</label>
-        <input type="password" name="password_hash" id="password_hash" required>
+        <input type="submit" class="btn" value="Создать">
 
-        <label for="new_password_hash">Новый пароль:</label>
-        <input type="password" name="new_password_hash" id="new_password_hash" placeholder="Не заполняйте, если не хотите менять">
-
-        <input type="submit" class="btn" value="Сохранить">
     </form>
 </main>
 

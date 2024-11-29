@@ -1,12 +1,19 @@
 <?php 
     require './functions/functions.php';
-
+    
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $email = htmlspecialchars($_POST['email']);  
-        $password_hash = htmlspecialchars($_POST['password_hash']);  
 
-        loginUser($email, $password_hash);
+        if (isset($_SESSION['session_token']) && $_SESSION['user_id']) {
+            echo '<style> .reg, .login, .adm {visibility: hidden;} </style>';
+        }
+
+        $email = htmlspecialchars($_POST['email']);  
+
+        $user = generateToken($email);
+        header('Location: /reset_password.php');
+
     };
+
 
 ?>
 
@@ -15,7 +22,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Reset password</title>
 
     <style>
 
@@ -64,28 +71,26 @@
         <nav>
             <a href="/index.php" class="reg">Регистрация</a>
             <a href="/login.php" class="login">Вход</a>
+            <a href="/edit_profile.php" class="edit">Редактирование профиля</a>
+            <a href="/admin.php" class="adm">Админ</a>
         </nav>
     </header>
 
     <main>
 
-        <h1 class="logotype">Вход</h1>
+        <h1 class="logotype">Восстановление пароля</h1>
 
         <form action="" method="post" id="myform">
 
-            <label for="email">Эл. почта:</label>
-            <input type="email" name="email" id="email">
+            <label for="email">Введите почту: </label>
+            <input type="email" name="email" id="email" required>
 
-            <label for="password_hash">Пароль:</label>
-            <input type="password" name="password_hash" id="password_hash">
+            <input type="submit" class="btn" value="Сброс пароля">
 
-            <input type="submit" class="btn">
 
         </form>
 
-        <a href="/forget_password.php">Забыли пароль?</a>
-
     </main>
-    
+
 </body>
 </html>
